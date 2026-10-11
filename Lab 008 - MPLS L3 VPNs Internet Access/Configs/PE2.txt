@@ -1,0 +1,35 @@
+hostname PE2
+!
+ip vrf Cust-A
+ rd 100:1
+ route-target export 100:1
+ route-target import 100:1
+!
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.255
+ ip router isis 
+!
+interface GigabitEthernet0/0
+ ip vrf forwarding Cust-A
+ ip address 10.1.2.2 255.255.255.0
+!
+interface GigabitEthernet0/1
+ ip address 10.2.3.2 255.255.255.0
+ ip router isis 
+!
+router ospf 1 vrf Cust-A
+ network 10.1.2.0 0.0.0.255 area 0
+ default-information originate always
+!
+router isis
+ mpls ldp autoconfig
+ net 49.0001.0000.0000.0002.00
+ is-type level-2-only
+ redistribute static ip
+!
+ip route 100.1.1.0 255.255.255.0 GigabitEthernet0/0 10.1.2.1
+ip route vrf Cust-A 0.0.0.0 0.0.0.0 100.0.0.1 global
+ip route vrf Cust-A 100.1.1.0 255.255.255.0 10.1.2.1
+!
+end
+

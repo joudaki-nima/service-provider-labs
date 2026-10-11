@@ -1,0 +1,18 @@
+hostname ASBR5
+!
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+!
+interface GigabitEthernet0/1
+ ip address 100.0.0.2 255.255.255.0
+!         
+router bgp 65200
+ bgp log-neighbor-changes
+ neighbor 100.0.0.1 remote-as 65100
+!
+ip route 0.0.0.0 0.0.0.0 Null0
+ip route 10.0.0.0 255.0.0.0 100.0.0.1
+ip route 100.1.1.0 255.255.255.0 100.0.0.1
+!
+end
+
