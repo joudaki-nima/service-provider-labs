@@ -1,0 +1,19 @@
+hostname P3
+!
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.0
+ ip ospf 100 area 0
+!
+interface GigabitEthernet0/0
+ ip address 10.2.3.3 255.255.255.0
+ ip ospf 100 area 0
+!
+interface GigabitEthernet0/1
+ ip address 10.3.4.3 255.255.255.0
+ ip ospf 100 area 0
+!
+router ospf 100
+ mpls ldp autoconfig
+!
+end
+

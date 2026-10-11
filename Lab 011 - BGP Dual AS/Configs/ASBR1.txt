@@ -1,0 +1,30 @@
+hostname ASBR1
+!
+interface Loopback1
+ ip address 100.0.0.1 255.255.255.192
+!
+interface Loopback2
+ ip address 100.1.1.1 255.255.255.192
+!
+interface GigabitEthernet0/0
+ ip address 10.1.2.1 255.255.255.0
+!
+interface GigabitEthernet0/1
+ ip address 10.1.3.1 255.255.255.0
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ network 100.0.0.0 mask 255.255.255.192
+ network 100.1.1.0 mask 255.255.255.192
+ neighbor 10.1.2.2 remote-as 65011
+ neighbor 10.1.2.2 prefix-list To-AS-65011 out
+ neighbor 10.1.3.3 remote-as 65012
+ neighbor 10.1.3.3 local-as 65002 no-prepend replace-as
+ neighbor 10.1.3.3 prefix-list To-AS-65012 out
+!
+ip prefix-list To-AS-65011 seq 5 permit 100.0.0.0/26
+!         
+ip prefix-list To-AS-65012 seq 5 permit 100.1.1.0/26
+!
+end
+

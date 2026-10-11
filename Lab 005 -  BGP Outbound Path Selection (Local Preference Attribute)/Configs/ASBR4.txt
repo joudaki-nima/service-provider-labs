@@ -1,0 +1,56 @@
+hostname ASBR4
+!
+interface Loopback0
+ ip address 4.4.4.4 255.255.255.255
+!
+interface Loopback3
+ ip address 100.0.3.3 255.255.255.0
+!
+interface Loopback4
+ ip address 100.0.4.4 255.255.255.0
+!
+interface Loopback5
+ ip address 100.0.5.5 255.255.255.0
+!
+interface Loopback6
+ ip address 100.0.6.6 255.255.255.0
+!
+interface Loopback7
+ ip address 100.0.7.7 255.255.255.0
+!
+interface Loopback8
+ ip address 100.0.8.8 255.255.255.0
+!
+interface Loopback9
+ ip address 100.0.9.9 255.255.255.0
+!
+interface GigabitEthernet0/0
+ ip address 10.3.4.4 255.255.255.0
+!
+interface GigabitEthernet0/1
+ ip address 10.2.4.4 255.255.255.0
+!
+router bgp 65002
+ bgp log-neighbor-changes
+ network 100.0.3.0 mask 255.255.255.0
+ network 100.0.4.0 mask 255.255.255.0
+ network 100.0.5.0 mask 255.255.255.0
+ network 100.0.6.0 mask 255.255.255.0
+ network 100.0.7.0 mask 255.255.255.0
+ network 100.0.8.0 mask 255.255.255.0
+ network 100.0.9.0 mask 255.255.255.0
+ neighbor 2.2.2.2 remote-as 65001
+ neighbor 2.2.2.2 ebgp-multihop 255
+ neighbor 2.2.2.2 update-source Loopback0
+ neighbor 2.2.2.2 soft-reconfiguration inbound
+ neighbor 3.3.3.3 remote-as 65001
+ neighbor 3.3.3.3 ebgp-multihop 255
+ neighbor 3.3.3.3 update-source Loopback0
+ neighbor 3.3.3.3 soft-reconfiguration inbound
+!
+ip route 2.2.2.2 255.255.255.255 10.2.4.2
+ip route 3.3.3.3 255.255.255.255 10.3.4.3
+!
+end
+
+

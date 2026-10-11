@@ -1,0 +1,17 @@
+ASBR4#show ip bgp neighbors 2.2.2.2 received-routes | sec >
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal, 
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter, 
+              x best-external, a additional-path, c RIB-compressed, 
+              t secondary path, 
+ *>   100.0.1.0/24     2.2.2.2                                0 65001 i
+ *>   100.0.3.0/24     2.2.2.2                                0 65001 i
+
+
+ASBR4#show ip bgp neighbors 3.3.3.3 received-routes | sec >
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal, 
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter, 
+              x best-external, a additional-path, c RIB-compressed, 
+              t secondary path, 
+ *>   100.0.0.0/24     3.3.3.3                                0 65001 i
+ *>   100.0.2.0/24     3.3.3.3                                0 65001 i
+

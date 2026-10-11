@@ -1,0 +1,11 @@
+hostname CE11
+!
+interface Loopback0
+ ip address 11.11.11.11 255.255.255.255
+!
+interface GigabitEthernet0/1
+ ip address 10.10.11.11 255.255.255.0
+!
+ip route 0.0.0.0 0.0.0.0 10.10.11.10
+!
+end

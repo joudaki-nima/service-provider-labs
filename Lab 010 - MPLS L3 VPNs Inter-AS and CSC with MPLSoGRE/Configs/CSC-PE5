@@ -1,0 +1,28 @@
+hostname CSC-PE5
+!
+interface Loopback0
+ ip address 5.5.5.5 255.255.255.255
+ ip router isis 
+!
+interface GigabitEthernet0/0
+ ip address 10.5.6.5 255.255.255.0
+ ip router isis 
+!
+interface GigabitEthernet0/1
+ ip address 10.4.5.5 255.255.255.0
+!
+router isis
+ net 49.0001.0000.0000.0005.00
+ is-type level-2-only
+!
+router bgp 65002
+ bgp log-neighbor-changes
+ neighbor 6.6.6.6 remote-as 65002
+ neighbor 6.6.6.6 update-source Loopback0
+ neighbor 6.6.6.6 next-hop-self
+ neighbor 7.7.7.7 remote-as 65002
+ neighbor 7.7.7.7 update-source Loopback0
+ neighbor 7.7.7.7 next-hop-self
+ neighbor 10.4.5.4 remote-as 65001
+!
+end

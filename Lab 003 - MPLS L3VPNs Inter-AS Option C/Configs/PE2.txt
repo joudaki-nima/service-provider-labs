@@ -1,0 +1,55 @@
+hostname PE2
+!
+ip vrf Cust-A
+ rd 100:100
+ route-target export 100:100
+ route-target import 100:100
+!
+ip vrf Cust-B
+ rd 200:200
+ route-target export 200:200
+ route-target import 200:200
+!
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.255
+ ip ospf 100 area 0
+!
+interface GigabitEthernet0/0
+ ip address 10.2.3.2 255.255.255.0
+ ip ospf 100 area 0
+!
+interface GigabitEthernet0/1
+ ip vrf forwarding Cust-A
+ ip address 10.1.2.2 255.255.255.0
+!         
+interface GigabitEthernet0/2
+ ip vrf forwarding Cust-B
+ ip address 10.2.9.2 255.255.255.0
+!
+router ospf 100
+ mpls ldp autoconfig
+!
+router bgp 65100
+ bgp log-neighbor-changes
+ neighbor 11.11.11.11 remote-as 65100
+ neighbor 11.11.11.11 update-source Loopback0
+ !
+ address-family vpnv4
+  neighbor 11.11.11.11 activate
+  neighbor 11.11.11.11 send-community extended
+ exit-address-family
+ !
+ address-family ipv4 vrf Cust-A
+  redistribute static
+ exit-address-family
+ !
+ address-family ipv4 vrf Cust-B
+  redistribute static
+ exit-address-family
+!
+ip route vrf Cust-A 1.1.1.1 255.255.255.255 10.1.2.1
+ip route vrf Cust-B 9.9.9.9 255.255.255.255 10.2.9.9
+!
+end       
+
+

@@ -1,0 +1,58 @@
+hostname PE10
+!
+ip vrf Cust-A
+ rd 100:100
+ route-target export 100:100
+ route-target import 100:100
+!
+interface Loopback0
+ ip address 10.10.10.10 255.255.255.255
+ ip ospf 3 area 0
+!
+interface GigabitEthernet0/0
+ ip address 10.9.10.10 255.255.255.0
+ ip ospf 3 area 0
+!
+interface GigabitEthernet0/1
+ ip vrf forwarding Cust-A
+ ip address 10.10.11.10 255.255.255.0
+!
+l3vpn encapsulation ip MPLSoGRE
+ transport ipv4 source Loopback0
+!
+router ospf 3
+!
+router bgp 65003
+ bgp log-neighbor-changes
+ network 10.10.10.10 mask 255.255.255.255
+ neighbor 2.2.2.2 remote-as 65001
+ neighbor 2.2.2.2 ebgp-multihop 255
+ neighbor 2.2.2.2 update-source Loopback0
+ neighbor 2.2.2.2 route-map DENY_AS65001_LO in
+ neighbor 8.8.8.8 remote-as 65003
+ neighbor 8.8.8.8 update-source Loopback0
+ neighbor 9.9.9.9 remote-as 65003
+ neighbor 9.9.9.9 update-source Loopback0
+ !
+ address-family vpnv4
+  neighbor 2.2.2.2 activate
+  neighbor 2.2.2.2 send-community extended
+  neighbor 2.2.2.2 route-map CSC-AS-65001 in
+ exit-address-family
+ !
+ address-family ipv4 vrf Cust-A
+  redistribute static
+ exit-address-family
+!
+ip route vrf Cust-A 11.11.11.11 255.255.255.255 10.10.11.11
+!
+route-map DENY_AS65001_LO permit 10
+ match ip address 1
+!
+route-map CSC-AS-65001 permit 10
+ set ip next-hop encapsulate l3vpn MPLSoGRE
+!
+access-list 1 deny   2.2.2.2
+access-list 1 permit any
+!
+end

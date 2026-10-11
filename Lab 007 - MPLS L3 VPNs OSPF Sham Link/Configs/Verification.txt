@@ -1,0 +1,40 @@
+CE1#sh ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      5.0.0.0/32 is subnetted, 1 subnets
+O        5.5.5.5 [110/11] via 10.1.5.5, 00:00:22, GigabitEthernet0/2
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+O E2     10.2.2.2/32 [110/1] via 10.1.2.2, 00:26:49, GigabitEthernet0/0
+O E2     10.4.4.4/32 [110/1] via 10.1.2.2, 00:14:52, GigabitEthernet0/0
+O        10.4.5.0/24 [110/11] via 10.1.5.5, 00:00:22, GigabitEthernet0/2
+
+CE1#sh ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      5.0.0.0/32 is subnetted, 1 subnets
+O        5.5.5.5 [110/4] via 10.1.2.2, 00:03:19, GigabitEthernet0/0
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+O E2     10.2.2.2/32 [110/1] via 10.1.2.2, 00:30:38, GigabitEthernet0/0
+O E2     10.4.4.4/32 [110/1] via 10.1.2.2, 00:18:41, GigabitEthernet0/0
+O        10.4.5.0/24 [110/3] via 10.1.2.2, 00:03:19, GigabitEthernet0/0
+

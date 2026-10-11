@@ -1,0 +1,26 @@
+hostname CSC-CE8
+!
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+ ip ospf 3 area 0
+!
+interface GigabitEthernet0/0
+ ip address 10.7.8.8 255.255.255.0
+!
+interface GigabitEthernet0/1
+ ip address 10.8.9.8 255.255.255.0
+ ip ospf 3 area 0
+!
+router ospf 3
+!
+router bgp 65003
+ bgp log-neighbor-changes
+ neighbor 9.9.9.9 remote-as 65003
+ neighbor 9.9.9.9 update-source Loopback0
+ neighbor 9.9.9.9 next-hop-self
+ neighbor 10.7.8.7 remote-as 65002
+ neighbor 10.10.10.10 remote-as 65003
+ neighbor 10.10.10.10 update-source Loopback0
+ neighbor 10.10.10.10 next-hop-self
+!
+end

@@ -1,0 +1,54 @@
+hostname ASBR5
+!
+ip vrf Cust-A
+ rd 200:1
+ route-target export 200:1
+ route-target import 200:1
+!
+ip vrf Cust-B
+ rd 200:2
+ route-target export 200:2
+ route-target import 200:2
+!
+interface Loopback0
+ ip address 5.5.5.5 255.255.255.255
+ ip ospf 200 area 0
+!
+interface GigabitEthernet0/0.1
+ encapsulation dot1Q 45
+ ip vrf forwarding Cust-A
+ ip address 10.4.5.5 255.255.255.0
+!
+interface GigabitEthernet0/0.2
+ encapsulation dot1Q 54
+ ip vrf forwarding Cust-B
+ ip address 10.5.4.5 255.255.255.0
+!
+interface GigabitEthernet0/1
+ ip address 10.5.6.5 255.255.255.0
+ ip ospf 200 area 0
+!         
+router ospf 200
+ mpls ldp autoconfig
+!
+router bgp 65200
+ bgp log-neighbor-changes
+ neighbor 7.7.7.7 remote-as 65200
+ neighbor 7.7.7.7 update-source Loopback0
+ !
+ address-family vpnv4
+  neighbor 7.7.7.7 activate
+  neighbor 7.7.7.7 send-community extended
+ exit-address-family
+ !
+ address-family ipv4 vrf Cust-A
+  neighbor 10.4.5.4 remote-as 65100
+  neighbor 10.4.5.4 activate
+ exit-address-family
+ !
+ address-family ipv4 vrf Cust-B
+  neighbor 10.5.4.4 remote-as 65100
+  neighbor 10.5.4.4 activate
+ exit-address-family
+!
+end

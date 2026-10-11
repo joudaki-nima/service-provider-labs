@@ -1,0 +1,12 @@
+hostname CE2
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+!
+interface GigabitEthernet0/1
+ ip address 10.1.2.1 255.255.255.0
+
+ip route 0.0.0.0 0.0.0.0 10.1.2.2
+!
+end
+

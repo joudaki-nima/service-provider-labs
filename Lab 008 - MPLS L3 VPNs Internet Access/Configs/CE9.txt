@@ -1,0 +1,12 @@
+hostname 
+!
+interface Loopback0
+ ip address 9.9.9.9 255.255.255.255
+!
+interface GigabitEthernet0/2
+ ip address 10.2.9.9 255.255.255.0
+!
+ip route 0.0.0.0 0.0.0.0 10.2.9.2
+!
+end
+

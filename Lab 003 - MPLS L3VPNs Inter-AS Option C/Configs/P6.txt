@@ -1,0 +1,23 @@
+hostname P6
+!
+interface Loopback0
+ ip address 6.6.6.6 255.255.255.255
+ ip ospf 200 area 0
+!
+interface GigabitEthernet0/0
+ ip address 10.6.7.6 255.255.255.0
+ ip ospf 200 area 0
+!
+interface GigabitEthernet0/1
+ ip address 10.5.6.6 255.255.255.0
+ ip ospf 200 area 0
+!
+interface GigabitEthernet0/2
+ ip address 10.6.12.6 255.255.255.0
+ ip ospf 200 area 0
+!
+router ospf 200
+ mpls ldp autoconfig
+!
+end
+

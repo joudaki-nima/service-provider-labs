@@ -1,0 +1,24 @@
+hostname P9
+!
+interface Loopback0
+ ip address 9.9.9.9 255.255.255.255
+ ip ospf 3 area 0
+!
+interface GigabitEthernet0/0
+ ip address 10.9.10.9 255.255.255.0
+ ip ospf 3 area 0
+!
+interface GigabitEthernet0/1
+ ip address 10.8.9.9 255.255.255.0
+ ip ospf 3 area 0
+!
+router ospf 3
+!
+router bgp 65003
+ bgp log-neighbor-changes
+ neighbor 8.8.8.8 remote-as 65003
+ neighbor 8.8.8.8 update-source Loopback0
+ neighbor 10.10.10.10 remote-as 65003
+ neighbor 10.10.10.10 update-source Loopback0
+!
+end

@@ -1,0 +1,35 @@
+hostname ASBR5
+!
+interface Loopback0
+ ip address 5.5.5.5 255.255.255.255
+ ip ospf 200 area 0
+!
+interface GigabitEthernet0/0
+ ip address 10.4.5.5 255.255.255.0
+!
+interface GigabitEthernet0/1
+ ip address 10.5.6.5 255.255.255.0
+ ip ospf 200 area 0
+!
+router ospf 200
+ mpls ldp autoconfig
+ redistribute bgp 65200 subnets route-map INTER_AS
+!
+router bgp 65200
+ bgp log-neighbor-changes
+ network 7.7.7.7 mask 255.255.255.255
+ network 12.12.12.12 mask 255.255.255.255
+ neighbor 10.4.5.4 remote-as 65100
+ neighbor 10.4.5.4 send-label
+!
+ip prefix-list AS65100_PREFIXES seq 5 permit 2.2.2.2/32
+ip prefix-list AS65100_PREFIXES seq 10 permit 11.11.11.11/32
+!
+route-map INTER_AS permit 10
+ match ip address prefix-list AS65100_PREFIXES
+!
+route-map AS65200_PREFIXES permit 10
+ match ip address prefix-list AS65200_PREFIXES
+!
+end
+

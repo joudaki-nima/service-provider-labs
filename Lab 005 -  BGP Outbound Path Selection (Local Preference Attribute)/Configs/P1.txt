@@ -1,0 +1,29 @@
+hostname P1
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet0/0
+ ip address 10.1.2.1 255.255.255.0
+ ip ospf 1 area 0
+!
+interface GigabitEthernet0/1
+ ip address 10.1.3.1 255.255.255.0
+ ip ospf 1 area 0
+!
+router ospf 1
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ network 100.0.0.0 mask 255.255.255.0
+ network 100.0.1.0 mask 255.255.255.0
+ network 100.0.2.0 mask 255.255.255.0
+ network 100.0.3.0 mask 255.255.255.0
+ neighbor 2.2.2.2 remote-as 65001
+ neighbor 2.2.2.2 update-source Loopback0
+ neighbor 3.3.3.3 remote-as 65001
+ neighbor 3.3.3.3 update-source Loopback0
+!
+end
+

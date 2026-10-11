@@ -1,0 +1,57 @@
+RR5#sh ip bgp
+BGP table version is 3, local router ID is 5.5.5.5
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal, 
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter, 
+              x best-external, a additional-path, c RIB-compressed, 
+              t secondary path, 
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ * i  100.0.0.1/32     6.6.6.6                  0    100      0 65002 i
+ *>i                   7.7.7.7                  0    100      0 65002 i
+ *bi                   6.6.6.6                  0    100      0 65002 i
+
+
+RR5#show ip bgp 100.0.0.1
+BGP routing table entry for 100.0.0.1/32, version 3
+Paths: (3 available, best #2, table default)
+Flag: 0x100
+  Advertised to update-groups:
+     2         
+  Refresh Epoch 1
+  65002, (Received from a RR-client)
+    6.6.6.6 (metric 4) from 4.4.4.4 (4.4.4.4)
+      Origin IGP, metric 0, localpref 100, valid, internal
+      Originator: 6.6.6.6, Cluster list: 4.4.4.4
+      rx pathid: 0, tx pathid: 0
+  Refresh Epoch 1
+  65002, (Received from a RR-client)
+    7.7.7.7 (metric 3) from 7.7.7.7 (7.7.7.7)
+      Origin IGP, metric 0, localpref 100, valid, internal, best
+      rx pathid: 0, tx pathid: 0x0
+  Refresh Epoch 1
+  65002, (Received from a RR-client)
+    6.6.6.6 (metric 4) from 6.6.6.6 (6.6.6.6)
+      Origin IGP, metric 0, localpref 100, valid, internal, backup/repair
+      rx pathid: 0, tx pathid: 0
+      
+      
+PE1#show ip bgp 100.0.0.1
+BGP routing table entry for 100.0.0.1/32, version 2
+Paths: (2 available, best #2, table default)
+Flag: 0x100
+  Not advertised to any peer
+  Refresh Epoch 2
+  65002
+    6.6.6.6 (metric 3) from 5.5.5.5 (5.5.5.5)
+      Origin IGP, metric 0, localpref 100, valid, internal
+      Originator: 6.6.6.6, Cluster list: 5.5.5.5
+      rx pathid: 0, tx pathid: 0
+  Refresh Epoch 1
+  65002
+    6.6.6.6 (metric 3) from 4.4.4.4 (4.4.4.4)
+      Origin IGP, metric 0, localpref 100, valid, internal, best
+      Originator: 6.6.6.6, Cluster list: 4.4.4.4
+      rx pathid: 0, tx pathid: 0x0
+

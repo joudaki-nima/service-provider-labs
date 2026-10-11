@@ -1,0 +1,21 @@
+hostname P3
+!
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+ ip router isis 
+!
+interface GigabitEthernet0/0
+ ip address 10.3.4.3 255.255.255.0
+ ip router isis 
+!
+interface GigabitEthernet0/1
+ ip address 10.2.3.3 255.255.255.0
+ ip router isis 
+!
+router isis
+ mpls ldp autoconfig
+ net 49.0001.0000.0000.0003.00
+ is-type level-2-only
+!
+end
+

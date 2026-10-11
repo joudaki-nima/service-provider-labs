@@ -1,0 +1,18 @@
+hostname CE5
+!
+interface Loopback0
+ ip address 5.5.5.5 255.255.255.255
+!
+interface GigabitEthernet0/1
+ ip address 10.4.5.5 255.255.255.0
+!
+interface GigabitEthernet0/2
+ ip address 10.1.5.5 255.255.255.0
+!
+router ospf 1
+ network 5.5.5.5 0.0.0.0 area 0
+ network 10.1.5.0 0.0.0.255 area 0
+ network 10.4.5.0 0.0.0.255 area 0
+!
+end
+

@@ -1,0 +1,32 @@
+hostname RR11
+!
+interface Loopback0
+ ip address 11.11.11.11 255.255.255.255
+ ip ospf 100 area 0
+!
+interface GigabitEthernet0/2
+ ip address 10.3.11.11 255.255.255.0
+ ip ospf 100 area 0
+!
+router ospf 100
+ mpls ldp autoconfig
+!
+router bgp 65100
+ bgp log-neighbor-changes
+ neighbor 2.2.2.2 remote-as 65100
+ neighbor 2.2.2.2 update-source Loopback0
+ neighbor 12.12.12.12 remote-as 65200
+ neighbor 12.12.12.12 ebgp-multihop 255
+ neighbor 12.12.12.12 update-source Loopback0
+ !
+ address-family vpnv4
+  neighbor 2.2.2.2 activate
+  neighbor 2.2.2.2 send-community extended
+  neighbor 2.2.2.2 route-reflector-client
+  neighbor 12.12.12.12 activate
+  neighbor 12.12.12.12 send-community extended
+  neighbor 12.12.12.12 next-hop-unchanged
+ exit-address-family
+ !
+end
+
